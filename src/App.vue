@@ -3,9 +3,12 @@
     id="app"
     class="container"
   >
-    <h1 class="text-primary mt-3">Music App</h1>
+    <h1 class="text-primary mt-3">{{name}}</h1>
     <p>
-      <font-awesome-icon icon="trash" /> Modern Hard Rock</p>
+      <font-awesome-icon
+        icon="play"
+        @click="showDescription = !showDescription"
+      /> <span v-if="showDescription">{{description}}</span></p>
   </div>
 </template>
 
@@ -13,6 +16,14 @@
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 export default {
   name: "app",
+  data() {
+    return {
+      showDescription: false,
+      name: "Modern Hard Rock",
+      description:
+        "Powerful rock track with cool guitar riffs, energetic groovy drums, tight bass and guitar solo. Perfect for use in sport (like boxing) videos, advertisements etc."
+    };
+  },
   components: {
     FontAwesomeIcon
   }
