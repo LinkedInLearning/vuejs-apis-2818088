@@ -1,31 +1,27 @@
 <template>
-  <div
-    id="app"
-    class="container"
-  >
-    <h1 class="text-primary mt-3">{{name}}</h1>
-    <p>
-      <font-awesome-icon
-        icon="play"
-        @click="showDescription = !showDescription"
-      /> <span v-if="showDescription">{{description}}</span></p>
+  <div id="app">
+    <current-song :song="currentSong" />
   </div>
 </template>
 
 <script>
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import CurrentSong from "@/components/CurrentSong";
+
 export default {
   name: "app",
   data() {
     return {
-      showDescription: false,
-      name: "Modern Hard Rock",
-      description:
-        "Powerful rock track with cool guitar riffs, energetic groovy drums, tight bass and guitar solo. Perfect for use in sport (like boxing) videos, advertisements etc."
+      currentSong: {
+        name: "Modern Hard Rock",
+        description:
+          "Powerful rock track with cool guitar riffs, energetic groovy drums, tight bass and guitar solo. Perfect for use in sport (like boxing) videos, advertisements etc."
+      }
     };
   },
   components: {
-    FontAwesomeIcon
+    FontAwesomeIcon,
+    CurrentSong
   }
 };
 </script>
