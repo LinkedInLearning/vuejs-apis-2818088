@@ -1,7 +1,15 @@
 <template>
   <div id="app">
-    <current-song :song="currentSong" />
-    <song-list :songs="songs" />
+    <current-song
+      :song="currentSong"
+      v-if="currentSong"
+    />
+    <song-list
+      :songs="songs"
+      :currentSong="currentSong"
+      @handlePlay="handlePlay"
+      @handleDelete="handleDelete"
+    />
   </div>
 </template>
 
@@ -9,16 +17,14 @@
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import CurrentSong from "@/components/CurrentSong";
 import SongList from "@/components/SongList";
+import _ from "lodash";
 
 export default {
   name: "app",
   data() {
     return {
-      currentSong: {
-        name: "Modern Hard Rock",
-        description:
-          "Powerful rock track with cool guitar riffs, energetic groovy drums, tight bass and guitar solo. Perfect for use in sport (like boxing) videos, advertisements etc."
-      },
+      currentSong: null,
+      audioElement: null,
       songs: [
         {
           id: "1",
@@ -172,6 +178,34 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    handlePlay: function(payload) {
+      if (this.audioElement == null) {
+        this.audioElement = new Audio(payload.music_url);
+        this.audioElement.play();
+      } else {
+        if (payload == this.currentSong) {
+          if (this.audioElement.paused) {
+            this.audioElement.play();
+          } else {
+            this.audioElement.pause();
+          }
+        } else {
+          this.audioElement.src = payload.music_url;
+          this.audioElement.play();
+        }
+      }
+      this.currentSong = payload;
+      this.audioElement.addEventListener("ended", () => {
+        this.currentSong = null;
+        this.audioElement = null;
+      });
+    },
+    handleDelete: function(payload) {
+      const updatedArray = _.without(this.songs, payload);
+      this.songs = updatedArray;
+    }
   },
   components: {
     FontAwesomeIcon,
