@@ -17,6 +17,7 @@
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import CurrentSong from "@/components/CurrentSong";
 import SongList from "@/components/SongList";
+import axios from "axios";
 import _ from "lodash";
 
 export default {
@@ -57,11 +58,9 @@ export default {
     }
   },
   created() {
-    fetch("./data.json")
-      .then(response => response.json())
-      .then(response => {
-        this.songs = response;
-      })
+    axios
+      .get("./data.json")
+      .then(response => (this.songs = response.data))
       .catch(error => console.log(error));
   },
   components: {
