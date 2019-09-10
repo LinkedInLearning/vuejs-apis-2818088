@@ -58,8 +58,13 @@ export default {
     }
   },
   created() {
-    axios
-      .get("./data.json")
+    axios({
+      method: "get",
+      url: "https://orangevalleycaa.org/api/music",
+      params: {
+        order: "name"
+      }
+    })
       .then(response => (this.songs = response.data))
       .catch(error => console.log(error));
   },

@@ -2,6 +2,7 @@
   <div class="songlist list-group">
     <div
       class="song list-group-item list-group-item-action d-flex"
+      :class="{'active': (currentSong !== null && currentSong==song)}"
       v-for="(song, index) in songs"
       :key="index"
     >
