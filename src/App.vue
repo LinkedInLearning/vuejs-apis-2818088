@@ -14,11 +14,8 @@
 </template>
 
 <script>
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import CurrentSong from "@/components/CurrentSong";
 import SongList from "@/components/SongList";
-import axios from "axios";
-import _ from "lodash";
 import { mapState } from "vuex";
 
 export default {
@@ -48,22 +45,20 @@ export default {
           this.audioElement.play();
         }
       }
-      this.currentSong = payload;
+      this.$store.dispatch("changeSong", payload);
       this.audioElement.addEventListener("ended", () => {
-        this.currentSong = null;
+        this.$store.dispatch("changeSong", null);
         this.audioElement = null;
       });
     },
     handleDelete: function(payload) {
-      const updatedArray = _.without(this.songs, payload);
-      this.songs = updatedArray;
+      this.$store.dispatch("deleteSong", payload);
     }
   },
   created() {
     this.$store.dispatch("fetchSongs");
   },
   components: {
-    FontAwesomeIcon,
     CurrentSong,
     SongList
   }
