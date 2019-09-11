@@ -17,6 +17,7 @@
 import CurrentSong from "@/components/CurrentSong";
 import SongList from "@/components/SongList";
 import { mapState } from "vuex";
+import db from "./db.js";
 
 export default {
   name: "app",
