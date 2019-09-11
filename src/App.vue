@@ -16,7 +16,6 @@
 <script>
 import CurrentSong from "@/components/CurrentSong";
 import SongList from "@/components/SongList";
-import { mapState } from "vuex";
 import db from "./db.js";
 
 export default {
@@ -27,9 +26,6 @@ export default {
       audioElement: null,
       songs: []
     };
-  },
-  computed: {
-    ...mapState(["songs", "currentSong"])
   },
   methods: {
     handlePlay: function(payload) {
@@ -55,7 +51,9 @@ export default {
       });
     },
     handleDelete: function(payload) {
-      this.$store.dispatch("deleteSong", payload);
+      db.collection("songs")
+        .doc(payload.id)
+        .delete();
     }
   },
   mounted() {
